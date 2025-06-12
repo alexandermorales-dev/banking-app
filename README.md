@@ -68,21 +68,11 @@ Simply double-click index.html or drag it into your browser. No server setup is 
 🚀 How to Use the App
 To test the application, use the following sample user credentials for login:
 
-Username ----- PIN (Password)
+![image](https://github.com/user-attachments/assets/368734f7-b2c6-482d-850e-c915875ea2dc)
 
-u1 ----- 1111
 
-u2 ----- 2222
+![image](https://github.com/user-attachments/assets/32f4c541-fa10-420b-bcb5-098e035e7b0a)
 
-u3 ----- 3333
-
-u4 ----- 4444
-
-📂 Project Structure
-.
-├── index.html        # Main application page
-├── style.css         # All CSS styling
-└── script.js         # Core JavaScript logic and functionalities
 
 💡 Future Enhancements
 
