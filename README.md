@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/84bc09d2-be53-4864-84c2-e23984bb5a29)
+
 This project is a client-side web application simulating basic banking functionalities, built entirely with HTML, CSS, and vanilla JavaScript. It demonstrates modern JavaScript practices, focusing on efficient data manipulation and clear, maintainable code using core array methods.
 
 ✨ Features
