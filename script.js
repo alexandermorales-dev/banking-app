@@ -38,6 +38,9 @@ const accounts = [account1, account2, account3, account4];
 
 /////////////////////////////////////////////////
 // Elements
+let navBar = document.querySelector('nav')
+const loggedInControls = document.querySelector('#logged-in-controls');
+const welcomeTextLoggedIn = document.querySelector('#welcome-text-logged-in');
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
@@ -49,7 +52,10 @@ const labelTimer = document.querySelector('.timer');
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 
+const loginForm = document.querySelector('.login')
 const btnLogin = document.querySelector('.login__btn');
+const btnLogout = document.querySelector('.logout__btn');
+
 const btnTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
 const btnClose = document.querySelector('.form__btn--close');
@@ -62,6 +68,8 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
+
+console.log(loginForm)
 
 /////////////////////////////////////////////////
 // Functions
@@ -76,9 +84,8 @@ const displayMovements = function (movements, sort = false) {
 
     const html = `
       <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
+        <div class="movements__type movements__type--${type}">${i + 1
+      } ${type}</div>
         <div class="movements__value">${mov}€</div>
       </div>
     `;
@@ -135,24 +142,35 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const insertNewNavbar = () => {
+  loginForm.style.display = 'none';
+  loggedInControls.style.display = 'flex'; // Or 'block', 'grid', depending on your CSS
+  welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+}
+
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
 
-btnLogin.addEventListener('click', function (e) {
+loginForm.addEventListener('submit', function (e) {
+  // debugger;
   // Prevent form from submitting
   e.preventDefault();
 
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
+
+  if (!currentAccount) {
+    alert('User not found')
+    return
+  }
   console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
-    labelWelcome.textContent = `Welcome back, ${
-      currentAccount.owner.split(' ')[0]
-    }`;
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
+      }`;
     containerApp.style.opacity = 1;
 
     // Clear input fields
@@ -213,14 +231,39 @@ btnClose.addEventListener('click', function (e) {
       acc => acc.username === currentAccount.username
     );
     console.log(index);
-    // .indexOf(23)
 
     // Delete account
     accounts.splice(index, 1);
 
     // Hide UI
     containerApp.style.opacity = 0;
+
+    loginForm.style.display = 'flex';
+    loggedInControls.style.display = 'none';
+
+    currentAccount = undefined;
+    labelWelcome.textContent = 'Log in to get started';
+
   }
+
+  // const html = `<p class="welcome">Log in to get started</p>
+  //     <img src="goat_icon.png" alt="Logo" class="logo" />
+  //     <form class="login">
+  //       <input
+  //         type="text"
+  //         placeholder="user"
+  //         class="login__input login__input--user"
+  //       />
+  //       <input
+  //         type="password"
+  //         placeholder="PIN"
+  //         maxlength="4"
+  //         class="login__input login__input--pin"
+  //       />
+  //       <button class="login__btn">&rarr;</button>
+  //     </form>`
+
+  // document.querySelector('nav').innerHTML = html
 
   inputCloseUsername.value = inputClosePin.value = '';
 });
