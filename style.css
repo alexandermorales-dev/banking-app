@@ -27,6 +27,9 @@ nav,
   padding: 0 2rem;
 }
 
+.logged-in-controls{
+  width: 100%;
+}
 
 
 .welcome {
@@ -305,11 +308,7 @@ h2 {
     flex-direction: column;
   }
 
-  .logo {
-    display: none;
-  }
-
-  .login {
+   .login {
     padding-top: 5px;
   }
 
