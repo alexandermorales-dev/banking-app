@@ -38,10 +38,12 @@ const accounts = [account1, account2, account3, account4];
 
 /////////////////////////////////////////////////
 // Elements
-let navBar = document.querySelector('nav')
-const loggedInControls = document.querySelector('#logged-in-controls');
+const navBarDashboard = document.querySelector('#logged-in-controls');
 const welcomeTextLoggedIn = document.querySelector('#welcome-text-logged-in');
 const labelWelcome = document.querySelector('.welcome');
+const navBar = document.querySelector('.welcome-container');
+const logo = document.querySelector('.logo')
+
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value--in');
@@ -143,17 +145,18 @@ const updateUI = function (acc) {
 };
 
 const insertNewNavbar = () => {
-  loginForm.style.display = 'none';
-  loggedInControls.style.display = 'flex'; // Or 'block', 'grid', depending on your CSS
-  welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
-}
+  loginForm.classList.add('hidden');
+  navBar.classList.add('hidden')
+  logo.classList.add('hidden')
 
+  navBarDashboard.style.display = 'flex'; 
+  welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+};
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
 
 loginForm.addEventListener('submit', function (e) {
-  // debugger;
   // Prevent form from submitting
   e.preventDefault();
 
@@ -169,9 +172,14 @@ loginForm.addEventListener('submit', function (e) {
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
-    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
-      }`;
+    // labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
+    // }`;
+    insertNewNavbar()
     containerApp.style.opacity = 1;
+
+    // loginForm.classList.add('hidden');
+    // navBarDashboard.style.display = 'flex';
+    // welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -239,31 +247,12 @@ btnClose.addEventListener('click', function (e) {
     containerApp.style.opacity = 0;
 
     loginForm.style.display = 'flex';
-    loggedInControls.style.display = 'none';
+    navBarDashboard.style.display = 'none';
 
     currentAccount = undefined;
     labelWelcome.textContent = 'Log in to get started';
 
   }
-
-  // const html = `<p class="welcome">Log in to get started</p>
-  //     <img src="goat_icon.png" alt="Logo" class="logo" />
-  //     <form class="login">
-  //       <input
-  //         type="text"
-  //         placeholder="user"
-  //         class="login__input login__input--user"
-  //       />
-  //       <input
-  //         type="password"
-  //         placeholder="PIN"
-  //         maxlength="4"
-  //         class="login__input login__input--pin"
-  //       />
-  //       <button class="login__btn">&rarr;</button>
-  //     </form>`
-
-  // document.querySelector('nav').innerHTML = html
 
   inputCloseUsername.value = inputClosePin.value = '';
 });

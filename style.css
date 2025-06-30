@@ -4,13 +4,8 @@
   box-sizing: inherit;
 }
 
-.hidden { 
-  display: none;
-}
 
-.visible {
-  display: block;
-}
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -24,12 +19,15 @@ body {
   padding: 2rem;
 }
 
-nav {
+nav,
+.logged-in-controls {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
 }
+
+
 
 .welcome {
   font-size: 1.9rem;
@@ -40,9 +38,6 @@ nav {
   height: 5.25rem;
 }
 
-.login {
-  display: flex;
-}
 
 .login__input {
   border: none;
@@ -103,7 +98,7 @@ nav {
 }
 
 .balance {
-  grid-column: 1 ;
+  grid-column: 1 / span 2;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -300,99 +295,95 @@ h2 {
   font-weight: 600;
 }
 
-@media screen and (max-width:424px){
+.hidden {
+  display: none;
+}
+
+
+@media screen and (max-width:424px) {
   nav {
     flex-direction: column;
   }
 
   .logo {
     display: none;
-  }  
+  }
 
   .login {
     padding-top: 5px;
   }
 
   .app {
-   position: relative;
-  max-width: 100rem; 
-  margin: 4rem auto;
-  display: grid;
-  gap: 2rem;
+    position: relative;
+    max-width: 100rem;
+    margin: 4rem auto;
+    display: grid;
+    gap: 2rem;
 
-  opacity: 0;
-  transition: all 1s;
+    opacity: 0;
+    transition: all 1s;
+  }
+
+  .balance {
+    grid-column: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
 }
 
-.balance {
-  grid-column: 1 ;
-  /* display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 2rem; */
-}
-}
-
-/* --- Media Query for Smaller Devices (Max-width 767px) --- */
 @media screen and (max-width: 767px) {
-  /* Adjust body padding for smaller screens */
   body {
     padding: 1rem;
   }
 
-  /* Adjust navigation to wrap and center items for responsiveness */
   nav {
     flex-wrap: wrap;
     justify-content: center;
     padding: 1rem;
   }
 
-  /* Adjust login form elements for vertical stacking on small screens */
   .login {
     flex-direction: column;
     width: 100%;
-    margin-top: 1.5rem; /* Add some space if login form wraps below welcome/logo */
+    margin-top: 1.5rem;
   }
 
   .login__input {
-    width: 100%; /* Make login input take full available width */
-    margin-right: 0; /* Remove right margin when stacked */
-    margin-bottom: 0.8rem; /* Add bottom margin for spacing between stacked inputs */
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.8rem;
   }
 
-  /* Change main app grid to a single column layout */
   .app {
-    grid-template-columns: 1fr; /* Single column for all sections */
-    grid-template-rows: auto auto auto auto auto; /* Each main section gets its own row */
-    max-width: 100%; /* Allow app container to take full width of viewport */
-    margin: 2rem 1rem; /* Adjust top/bottom margin and add side padding */
-    gap: 1.5rem; /* Slightly reduce gap between sections */
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    max-width: 100%;
+    margin: 2rem 1rem;
+    gap: 1.5rem;
   }
 
-  /* Reset balance section's grid-column and adjust its layout */
   .balance {
-    grid-column: auto; /* Reset, as it will naturally take 1fr in a single column grid */
-    flex-direction: column; /* Stack balance label, date, and value vertically */
-    align-items: flex-start; /* Align text to the left */
+    grid-column: auto;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: flex-start;
     margin-bottom: 1rem;
   }
 
-  /* Reset movements section's grid-row if it was spanning rows in desktop view */
   .movements {
-    grid-row: auto; /* Will now take a single row in the single-column grid */
-    height: auto; /* Allow movements section to grow vertically as needed */
+    grid-row: auto;
+    height: auto;
   }
 
-  /* Adjust padding for individual movement rows */
   .movements__row {
     padding: 1.5rem 2rem;
   }
 
-  /* Adjust summary section to wrap and align its items */
   .summary {
     flex-wrap: wrap;
-    justify-content: center; /* Center summary items when wrapped */
+    justify-content: center;
     padding: 0 1rem;
     margin-top: 0.5rem;
   }
@@ -402,34 +393,29 @@ h2 {
   }
 
   .btn--sort {
-    margin-left: 0; /* Remove auto margin as it might not be needed in a single column */
-    margin-top: 1rem; /* Add space if it wraps below summary values */
+    margin-left: 0;
+    margin-top: 1rem;
   }
 
-  /* Adjust padding for operation sections */
   .operation {
     padding: 2rem 2.5rem;
   }
 
-  /* Change form grid to a single column for stacking inputs/labels */
   .form {
     grid-template-columns: 1fr;
     gap: 0.8rem;
   }
 
-  /* Apply single column to the specific loan form as well */
   .form.form--loan {
     grid-template-columns: 1fr;
   }
 
   .form__label {
-    text-align: left; /* Adjust label alignment when stacked */
+    text-align: left;
   }
 
-  /* Adjust logout timer alignment */
   .logout-timer {
     text-align: center;
     margin-top: 1rem;
   }
 }
-
