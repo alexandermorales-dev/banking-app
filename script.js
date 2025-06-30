@@ -74,7 +74,6 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-console.log(loginForm)
 
 /////////////////////////////////////////////////
 // Functions
@@ -181,10 +180,10 @@ const showLoggedOutState = () => {
   if (loggedOutNavContent) {
     loggedOutNavContent.style.display = 'flex';
   }
-  if (logoDiv) { // Show the first logo div again
+  if (logoDiv) { 
     logoDiv.style.display = 'flex';
   }
-  if (loginForm) { // Show the login form again
+  if (loginForm) { 
     loginForm.style.display = 'flex';
   }
 
@@ -204,42 +203,35 @@ let timer;
 
 showLoggedOutState()
 const startLogoutTimer = function () {
-  let time = 300; // 5 minutes in seconds (5 * 60)
+  let time = 300; // 5 minutes in seconds
 
   const tick = function () {
     const min = String(Math.trunc(time / 60)).padStart(2, 0);
     const sec = String(time % 60).padStart(2, 0);
 
-    // In each call, print the remaining time to UI
     labelTimer.textContent = `${min}:${sec}`;
 
-    // When 0 seconds, stop timer and log out current user
     if (time === 0) {
-      clearInterval(timer); // Stop the timer
-      // Perform logout actions
-      containerApp.style.opacity = 0; // Hide app UI
-      showLoggedOutState(); // Show login form
-      currentAccount = undefined; // Clear current account
-      labelWelcome.textContent = 'Log in to get started'; // Reset welcome message
+      clearInterval(timer); 
+      containerApp.style.opacity = 0; 
+      showLoggedOutState(); 
+      currentAccount = undefined;
+      labelWelcome.textContent = 'Log in to get started'; 
     }
 
-    // Decrease time
     time--;
   };
 
-  // Clear any existing timer before starting a new one
   if (timer) {
     clearInterval(timer);
   }
 
-  // Call the timer immediately, then every second
-  tick(); // Call once immediately to display 05:00 instantly
-  timer = setInterval(tick, 1000); // Set interval for every second
-  return timer; // Return the timer ID in case you need it elsewhere (not strictly needed here)
+  tick(); 
+  timer = setInterval(tick, 1000); 
+  return timer; 
 };
 
 loginForm.addEventListener('submit', function (e) {
-  // Prevent form from submitting
   e.preventDefault();
 
   currentAccount = accounts.find(
@@ -252,17 +244,14 @@ loginForm.addEventListener('submit', function (e) {
   }
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
-    // Display UI and message
     insertNewNavbar()
     labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
       }`;
     containerApp.style.opacity = 1;
 
-    // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    // Update UI
     updateUI(currentAccount);
     startLogoutTimer();
 
@@ -301,7 +290,7 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
-    // Update UI
+    
     updateUI(currentAccount);
   }
 });
@@ -312,10 +301,10 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Number(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
+
     currentAccount.movements.push(amount);
 
-    // Update UI
+    
     updateUI(currentAccount);
   }
   inputLoanAmount.value = '';
@@ -332,10 +321,8 @@ btnClose.addEventListener('click', function (e) {
       acc => acc.username === currentAccount.username
     );
 
-    // Delete account
     accounts.splice(index, 1);
 
-    // Hide UI
     containerApp.style.opacity = 0;
 
     showLoggedOutState()
