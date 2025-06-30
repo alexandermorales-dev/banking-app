@@ -38,11 +38,14 @@ const accounts = [account1, account2, account3, account4];
 
 /////////////////////////////////////////////////
 // Elements
-const navBarDashboard = document.querySelector('#logged-in-controls');
+const loggedOutNavContent = document.querySelector('#welcome-message'); 
+const loggedInWelcomeMessage = document.querySelector('#logged-in-welcome-message');
+
+const loggedInControls = document.querySelector('#logged-in-controls');
 const welcomeTextLoggedIn = document.querySelector('#welcome-text-logged-in');
 const labelWelcome = document.querySelector('.welcome');
 const navBar = document.querySelector('.welcome-container');
-const logo = document.querySelector('.logo')
+const logoDiv = document.querySelector('.logo')
 
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
@@ -145,16 +148,53 @@ const updateUI = function (acc) {
 };
 
 const insertNewNavbar = () => {
-  loginForm.classList.add('hidden');
-  navBar.classList.add('hidden')
-  logo.classList.add('hidden')
+  if (loggedOutNavContent) {
+    loggedOutNavContent.style.display = 'none';
+  }
+  if (logoDiv) {
+    logoDiv.style.display = 'none';
+  }
+  if (loginForm) {
+    loginForm.style.display = 'none';
+  }
 
-  navBarDashboard.style.display = 'flex'; 
-  welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+  if (loggedInControls) {
+    loggedInControls.style.display = 'flex';
+    welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+  }
+
+  if (btnLogout) {
+    btnLogout.style.display = 'block'; 
+  }
+}
+
+const showLoggedOutState = () => {
+  // Hide the logged-in controls
+  if (loggedInControls) {
+    loggedInControls.style.display = 'none';
+    if (btnLogout) {
+      btnLogout.style.display = 'none';
+    }
+  }
+
+  // Show the individual elements for the logged-out state
+  if (loggedOutNavContent) {
+    loggedOutNavContent.style.display = 'flex'; 
+  }
+  if (logoDiv) { // Show the first logo div again
+    logoDiv.style.display = 'flex'; 
+  }
+  if (loginForm) { // Show the login form again
+    loginForm.style.display = 'flex'; 
+  }
+
+  labelWelcome.textContent = 'Log in to get started'; 
 };
+
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
+showLoggedOutState()
 
 loginForm.addEventListener('submit', function (e) {
   // Prevent form from submitting
@@ -168,18 +208,13 @@ loginForm.addEventListener('submit', function (e) {
     alert('User not found')
     return
   }
-  console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
-    // labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
-    // }`;
     insertNewNavbar()
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]
+      }`;
     containerApp.style.opacity = 1;
-
-    // loginForm.classList.add('hidden');
-    // navBarDashboard.style.display = 'flex';
-    // welcomeTextLoggedIn.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -189,6 +224,20 @@ loginForm.addEventListener('submit', function (e) {
     updateUI(currentAccount);
   }
 });
+
+if (btnLogout) {
+  btnLogout.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    containerApp.style.opacity = 0;
+
+    showLoggedOutState();
+
+    currentAccount = undefined;
+    labelWelcome.textContent = 'Log in to get started';
+  });
+}
+
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
@@ -238,7 +287,6 @@ btnClose.addEventListener('click', function (e) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
     );
-    console.log(index);
 
     // Delete account
     accounts.splice(index, 1);
@@ -246,15 +294,14 @@ btnClose.addEventListener('click', function (e) {
     // Hide UI
     containerApp.style.opacity = 0;
 
-    loginForm.style.display = 'flex';
-    navBarDashboard.style.display = 'none';
+    showLoggedOutState()
+
+    inputCloseUsername.value = inputClosePin.value = '';
 
     currentAccount = undefined;
-    labelWelcome.textContent = 'Log in to get started';
 
   }
 
-  inputCloseUsername.value = inputClosePin.value = '';
 });
 
 let sorted = false;
