@@ -28,6 +28,7 @@ nav,
 }
 
 .logged-in-controls{
+  
   width: 100%;
 }
 
@@ -312,6 +313,18 @@ h2 {
     padding-top: 5px;
   }
 
+  .logo{
+    display: none;
+}
+
+  .logged-in-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+
   .app {
     position: relative;
     max-width: 100rem;
@@ -324,9 +337,10 @@ h2 {
   }
 
   .balance {
-    grid-column: 1;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    grid-column: 1;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 2rem;
   }
@@ -342,6 +356,10 @@ h2 {
     justify-content: center;
     padding: 1rem;
   }
+
+   .logo{
+    display: none;
+}
 
   .login {
     flex-direction: column;
@@ -366,7 +384,7 @@ h2 {
   .balance {
     grid-column: auto;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     margin-bottom: 1rem;
   }
