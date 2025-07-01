@@ -65,6 +65,10 @@ cd simple-banking-app
 Open index.html in your web browser:
 Simply double-click index.html or drag it into your browser. No server setup is required as it's a client-side application.
 
+### Check the live page here
+
+https://alexandermorales-dev.github.io/banking-app/
+
 🚀 How to Use the App
 To test the application, use the following sample user credentials for login:
 
@@ -85,3 +89,7 @@ More Robust Authentication: Add password hashing and stronger login mechanisms.
 User Interface Improvements: Enhance responsiveness and add more visual feedback.
 
 Error Handling: More comprehensive error handling for user inputs and operations.
+
+### See v2 of this project here:
+
+https://github.com/alexandermorales-dev/banking-app-v2
